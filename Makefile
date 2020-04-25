@@ -14,6 +14,7 @@ create:
 	./fargate-wrapper.sh service create webapp \
 		--cluster webapp \
 		--lb webapp \
+		--num 1 \
 		--port HTTP:3000 \
 		--cpu 256 \
 		--memory 512 \
@@ -22,8 +23,7 @@ create:
 
 deploy:
 	./fargate-wrapper.sh service deploy webapp \
-		--cluster webapp \
-		--image $(WEBAPP_REPOSITORY_URL)
+		--cluster webapp
 
 destroy:
 	./fargate-wrapper.sh service scale webapp 0 --cluster webapp

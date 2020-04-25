@@ -6,6 +6,7 @@ A dead simple example to setup AWS Fargate service + Terraform
 
 - Use [Terraform](https://www.terraform.io) to setup AWS ECS basic environment
 - Use [Fargate CLI](https://github.com/awslabs/fargatecli) to create Fargate services without hassle
+- Zero-downtime deploy thanks to Fargate
 
 # Why
 
@@ -15,7 +16,7 @@ We can create all of AWS ECS environment with Terraform. However, it requires a 
 
 ### Initial Setup
 
-```
+```sh
 cp aws-credentials.ini.example aws-credentials.ini
 
 # Add your credentials
@@ -34,6 +35,14 @@ make create
 ```
 make info
 ```
+
+### Deploy service
+
+```
+make deploy
+```
+
+Note: This will build `Dockerfile` in the current directory. If you have other deploy strategy, edit `Makefile`.
 
 ### Delere everything
 
@@ -59,3 +68,4 @@ By Fargate CLI:
 - ECS Task Execution Role
 - ALB
 - ALB Target Group
+- CloudWatch Log Group
