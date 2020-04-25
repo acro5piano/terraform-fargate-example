@@ -3,15 +3,15 @@ WEBAPP_LB_SECURITY_GROUP := `terraform state show aws_security_group.webapp_lb |
 WEBAPP_REPOSITORY_URL := `terraform state show aws_ecr_repository.webapp | grep repository_url | perl -pe 's/.+"(.+)"/\1/'`
 
 info:
-	bin/fargate service info webapp --cluster webapp
-	bin/fargate lb list --cluster webapp
+	./fargate-wrapper.sh service info webapp --cluster webapp
+	./fargate-wrapper.sh lb list --cluster webapp
 
 create:
-	bin/fargate lb create webapp \
+	./fargate-wrapper.sh lb create webapp \
 		--cluster webapp \
 		--port HTTP:80 \
 		--security-group-id $(WEBAPP_LB_SECURITY_GROUP)
-	bin/fargate service create webapp \
+	./fargate-wrapper.sh service create webapp \
 		--cluster webapp \
 		--lb webapp \
 		--port HTTP:3000 \
@@ -21,14 +21,14 @@ create:
 		--image $(WEBAPP_REPOSITORY_URL)
 
 deploy:
-	bin/fargate service deploy webapp \
+	./fargate-wrapper.sh service deploy webapp \
 		--cluster webapp \
 		--image $(WEBAPP_REPOSITORY_URL)
 
 destroy:
-	bin/fargate service scale webapp 0 --cluster webapp
-	bin/fargate service destroy webapp --cluster webapp
-	bin/fargate lb destroy webapp
+	./fargate-wrapper.sh service scale webapp 0 --cluster webapp
+	./fargate-wrapper.sh service destroy webapp --cluster webapp
+	./fargate-wrapper.sh lb destroy webapp
 
 help:
 	@echo Available commands:
