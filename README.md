@@ -32,13 +32,13 @@ make create
 
 ### Show information
 
-```
+```sh
 make info
 ```
 
 ### Deploy service
 
-```
+```sh
 make deploy
 ```
 
@@ -46,8 +46,9 @@ Note: This will build `Dockerfile` in the current directory. If you have other d
 
 ### Delere everything
 
-```
+```sh
 make destroy
+terraform destroy
 ```
 
 Note: ECS Execution Role will not be deleted.
