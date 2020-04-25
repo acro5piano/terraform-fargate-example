@@ -19,7 +19,6 @@ resource "aws_security_group" "webapp" {
     from_port       = 3000
     to_port         = 3000
     protocol        = "tcp"
-    cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.webapp_lb.id]
   }
 }
