@@ -1,6 +1,6 @@
 # Terraform & Fargate example
 
-A dead simple example to setup AWS Fargate service + Terraform
+A dead simple example to setup AWS Fargate using Fargate CLI + Terraform
 
 # Features
 
