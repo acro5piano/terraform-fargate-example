@@ -4,10 +4,6 @@ provider "aws" {
   profile                 = "default"
 }
 
-resource "aws_ecr_repository" "webapp" {
-  name = "webapp"
-}
-
 resource "aws_ecs_cluster" "webapp" {
   name = "webapp"
 }
@@ -41,4 +37,12 @@ resource "aws_security_group" "webapp_lb" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+output "webapp_ecs_security_group" {
+  value = aws_security_group.webapp.id
+}
+
+output "webapp_lb_security_group" {
+  value = aws_security_group.webapp_lb.id
 }

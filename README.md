@@ -57,12 +57,12 @@ Note: ECS Execution Role will not be deleted.
 
 By Terraform:
 
-- ECR Repository
 - ECS Cluser
 - EC2 Security Group
 
 By Fargate CLI:
 
+- ECR Repository
 - ECS Task Definition
 - ECS Service
 - ECS Task

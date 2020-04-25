@@ -1,7 +1,3 @@
-WEBAPP_ECS_SECURITY_GROUP := `terraform state show aws_security_group.webapp | grep arn | perl -pe 's/.+\/sg\-(.+)"/sg-\1/'`
-WEBAPP_LB_SECURITY_GROUP := `terraform state show aws_security_group.webapp_lb | grep arn | perl -pe 's/.+\/sg\-(.+)"/sg-\1/'`
-WEBAPP_REPOSITORY_URL := `terraform state show aws_ecr_repository.webapp | grep repository_url | perl -pe 's/.+"(.+)"/\1/'`
-
 info:
 	./fargate-wrapper.sh service info webapp --cluster webapp
 	./fargate-wrapper.sh lb list --cluster webapp
@@ -10,7 +6,7 @@ create:
 	./fargate-wrapper.sh lb create webapp \
 		--cluster webapp \
 		--port HTTP:80 \
-		--security-group-id $(WEBAPP_LB_SECURITY_GROUP)
+		--security-group-id `terraform output webapp_lb_security_group`
 	./fargate-wrapper.sh service create webapp \
 		--cluster webapp \
 		--lb webapp \
@@ -18,8 +14,7 @@ create:
 		--port HTTP:3000 \
 		--cpu 256 \
 		--memory 512 \
-		--security-group-id $(WEBAPP_ECS_SECURITY_GROUP) \
-		--image $(WEBAPP_REPOSITORY_URL)
+		--security-group-id `terraform output webapp_ecs_security_group`
 
 deploy:
 	./fargate-wrapper.sh service deploy webapp \
