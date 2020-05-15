@@ -1,8 +1,13 @@
+init:
+	terraform init
+
 info:
+	terraform output
 	./fargate-wrapper.sh service info webapp --cluster webapp
 	./fargate-wrapper.sh lb list --cluster webapp
 
 create:
+	terraform apply
 	./fargate-wrapper.sh lb create webapp \
 		--cluster webapp \
 		--port HTTP:80 \
@@ -21,9 +26,12 @@ deploy:
 		--cluster webapp
 
 destroy:
+	@echo 'Are you okay to delete everything? [Y/n]'
+	@read ans && test $$ans == 'Y'
 	./fargate-wrapper.sh service scale webapp 0 --cluster webapp
 	./fargate-wrapper.sh service destroy webapp --cluster webapp
 	./fargate-wrapper.sh lb destroy webapp
+	terraform destroy
 
 help:
 	@echo Available commands:

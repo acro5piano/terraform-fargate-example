@@ -16,17 +16,23 @@ We can create all of AWS ECS environment with Terraform. However, it requires a 
 
 ### Initial Setup
 
+- Install prerequisites
+  - Terraform https://learn.hashicorp.com/terraform/getting-started/install.html
+  - Fargate CLI https://github.com/awslabs/fargatecli/releases/latest
+
 ```sh
 cp aws-credentials.ini.example aws-credentials.ini
 
 # Add your credentials
 vim aws-credentials.ini
 
-# Provision Terraform managed infrastructure
-terraform init
-terraform apply
+# Initialize Terraform
+make init
+```
 
-# Create ECS Fargate service
+### Create service
+
+```sh
 make create
 ```
 
@@ -48,7 +54,6 @@ Note: This will build `Dockerfile` in the current directory. If you have other d
 
 ```sh
 make destroy
-terraform destroy
 ```
 
 Note: ECS Execution Role will not be deleted.
@@ -59,10 +64,10 @@ By Terraform:
 
 - ECS Cluser
 - EC2 Security Group
+- ECR Repository
 
 By Fargate CLI:
 
-- ECR Repository
 - ECS Task Definition
 - ECS Service
 - ECS Task

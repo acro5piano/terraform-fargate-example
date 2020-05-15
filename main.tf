@@ -8,6 +8,10 @@ resource "aws_ecs_cluster" "webapp" {
   name = "webapp"
 }
 
+resource "aws_ecr_repository" "webapp" {
+  name = "webapp"
+}
+
 resource "aws_security_group" "webapp" {
   egress {
     from_port   = 0
