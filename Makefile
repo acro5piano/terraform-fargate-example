@@ -1,6 +1,13 @@
 init:
 	terraform init
 
+install-fargatecli:
+	wget https://github.com/awslabs/fargatecli/releases/download/0.3.2/fargate-0.3.2-linux-amd64.zip
+	unzip fargate-0.3.2-linux-amd64.zip
+	chmod +x fargate
+	sudo mv fargate /usr/bin/fargate
+	fargate --version
+
 info:
 	terraform output
 	./fargate-wrapper.sh service info webapp --cluster webapp
